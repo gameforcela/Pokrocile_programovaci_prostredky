@@ -1,0 +1,1 @@
+https://gameforcela.github.io/Pokrocile_programovaci_prostredky/vybaveninemocnice
