@@ -1,0 +1,37 @@
+﻿
+@if (Prvek == null) return;
+@if (!Prvek.IsInEditMode)   
+            {
+    <tr class="@(Prvek.NeedsRevision?"bg-red-300":"")">
+        <td>@Prvek.name</td>
+        <td>@Prvek.BoughtData.ToShortDateString()</td>
+        <td>@Prvek.LastRevisionDate.ToShortDateString()</td>
+        <td>@(Prvek.NeedsRevision?"Ano":"Ne") </td>
+
+        <td><button class="twbtn bg-red-400" @onclick="() => DeleteItemCallback.InvokeAsync()">Smazat</button></td>
+        <td><button class="btn btn-warning" @onclick="() => RevisionItemCallback.InvokeAsync()">Provést revizi</button></td>
+        <button @onclick="() => Prvek.IsInEditMode = true" class="bg-yellow-400 rounded-sm text-sm px-2 py-1">✏️</button>
+    </tr>
+    }
+            else
+            {
+    <tr class="bg-fuchsia-300">
+        <td><input @bind-value=Prvek.name /> </td>
+        <td><input type="date" @bind-value=Prvek.BoughtData /> </td>
+        <td><input type="date" @bind-value=Prvek.LastRevisionDate /> </td>
+        <td>@(Prvek.NeedsRevision?"Ano":"Ne") </td>
+
+        <td class="flex gap-1">
+            <button @onclick="() => Prvek.IsInEditMode = false" class="bg-green-400 rounded-sm text-sm px-2 py-1">Ok</button>
+            @*<button @onclick="() => item.IsInEditMode = true" class="bg-yellow-400 rounded-sm text-sm px-2 py-1">✏️</button>*@
+        </td>
+    </tr>
+    }
+
+@code {
+    [Parameter] public VybaveniModel? Prvek { get;set; }
+    [Parameter] public EventCallback<VybaveniModel> DeleteItemCallback { get; set; }
+    [Parameter] public EventCallback<VybaveniModel> RevisionItemCallback { get; set; }
+
+    
+}
