@@ -23,8 +23,9 @@ jobs:
       run: dotnet publish --configuration Release --output ${{env.PUBLISH_DIR}}
   
     # změní tag base v index.html from '/' na 'ppt_22' což je gh page k tomuto repu
-    - name: Change base-tag in index.html from / to pokrocile_program_techniky
-      run: sed -i 's/<base href="\/" \/>/<base href="\/pokrocile_program_techniky\/" \/>/g' ${{env.PUBLISH_DIR}}/wwwroot/index.html
+    - name: Change base-tag in index.html from / to Pokrocile_programovaci_prostredky
+
+      run: sed -i 's/<base href="\/" \/>/<base href="\/Pokrocile_programovaci_prostredky\/" \/>/g' ${{env.PUBLISH_DIR}}/wwwroot/index.html
       
       # zkopíruje index.html do 404.html který je předložen, kdykoliv vstoupíme na stránku, která neexistuje
     - name: copy index.html to 404.html
