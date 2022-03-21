@@ -4,13 +4,11 @@ namespace PptNemocnice.Shared;
 public class VybaveniModel
 {
 
-
-
     [Required, MinLength(5, ErrorMessage = "Délka u pole \"{0}\" musí být alespoň {1} znaků")]
     [Display(Name = "Název")]
     public string Name { get; set; } = "";
 
-    [Range(0, 10000000, ErrorMessage = "Cena má být 0 až 10 000 000.")]
+    [Range(1, 10000000, ErrorMessage = "Cena má být {1} až {2}.")]
     public double PriceCzk { get; set; }
     public DateTime BoughtDateTime { get; set; }
     public DateTime LastRevision { get; set; }

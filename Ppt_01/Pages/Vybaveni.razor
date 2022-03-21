@@ -22,8 +22,7 @@
     
     @if(isInNewMode && newEntity!=null)
     {
-        <VybaveniRow Item=newEntity 
-        EditDoneCallback="() => {isInNewMode = false;newEntity.IsInEditMode = false; seznamVybaveni.Insert(0,newEntity);}">
+        <VybaveniRow EditDoneCallback="(success) => { if(success)seznamVybaveni.Insert(0,newEntity); isInNewMode = false; }" Item=newEntity>
                 <button type="button" class="twbtn bg-neutral-300" @onclick="() => {isInNewMode = false;}" >Zruš</button>
                 <button type="submit" class="twbtn bg-emerald-500" >Přidej</button>
          </VybaveniRow>

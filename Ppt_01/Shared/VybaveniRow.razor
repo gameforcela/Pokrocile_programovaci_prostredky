@@ -38,6 +38,7 @@ else if (editingItem != null && editingItem.IsInEditMode)
                                 @if (ChildContent == null)
                                 {
                                     <button type="submit" class="twbtn bg-green-500">Ok</button>
+                                    <button type="button" class="twbtn bg-green-500"  @onclick="() => TurnOffEdit(false)">Zrušit</button>
                                 }
                                 else
                                 {
@@ -56,7 +57,7 @@ else if (editingItem != null && editingItem.IsInEditMode)
 @code {
 
     [Parameter] public EventCallback DeleteItemCallback { get; set; }
-    [Parameter] public EventCallback EditDoneCallback { get; set; }
+    [Parameter] public EventCallback<bool> EditDoneCallback { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
     VybaveniModel? editingItem;
 
