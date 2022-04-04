@@ -1,14 +1,21 @@
 ﻿@page "/vybaveni"
 @page "/co"
+@inject HttpClient Http
 
-@if(!isInNewMode)
+@if (!isInNewMode)
 {
- <button @onclick="@(() => {isInNewMode = true; newEntity = new(){IsInEditMode = true, Name="novota" }; })" class="twbtn bg-blue-500 my-2">
-    Přidej nový záznam
-</button>
+    <button @onclick="@(() => {isInNewMode = true; newEntity = new(){IsInEditMode = true, Name="novota", BoughtDateTime = DateTime.Now, LastRevision = DateTime.Now }; })" class="twbtn bg-blue-500 my-2">
+        Přidej nový záznam
+    </button>
 }
 
-
+@if (seznamVybaveni == null)
+{
+    <div class="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
+        <div class=" border-t-transparent border-solid animate-spin  rounded-full border-teal-600 border-8 h-16 w-16"></div>
+    </div>
+    return;
+}
 <table class="w-full">
 
     <thead class="border-b-2 border-slate-500">
@@ -19,26 +26,53 @@
             <th>Potřebuje revizi?</th>
         </tr>
     </thead>
-    
-    @if(isInNewMode && newEntity!=null)
+
+    @if (isInNewMode && newEntity != null)
     {
-        <VybaveniRow EditDoneCallback="(success) => { if(success)seznamVybaveni.Insert(0,newEntity); isInNewMode = false; }" Item=newEntity>
-                <button type="button" class="twbtn bg-neutral-300" @onclick="() => {isInNewMode = false;}" >Zruš</button>
-                <button type="submit" class="twbtn bg-emerald-500" >Přidej</button>
-         </VybaveniRow>
+        <VybaveniRow EditDoneCallback="async (success) => { if(success) await PostVybaveni(newEntity); isInNewMode = false; }" Item=newEntity>
+            <button type="button" class="twbtn bg-neutral-300" @onclick="() => {isInNewMode = false;}">Zruš</button>
+            <button type="submit" class="twbtn bg-emerald-500">Přidej</button>
+        </VybaveniRow>
 
     }
-    
+
 
     @foreach (var item in seznamVybaveni)
     {
-        <VybaveniRow Item=item DeleteItemCallback="() => seznamVybaveni.Remove(item)"/>
+        <VybaveniRow Item=item DeleteItemCallback="() => DeleteVybaveni(item)" EditDoneCallback="async (success) => { if(success) await PutVybaveni(item); }"/>
     }
 </table>
 
+
 @code {
     bool isInNewMode;
-    VybaveniModel? newEntity; 
-    List<VybaveniModel> seznamVybaveni = VybaveniModel.GetTestList();
+    VybaveniModel? newEntity;
+    List<VybaveniModel>? seznamVybaveni;
 
-}
+    protected override async Task OnInitializedAsync()
+    {
+        seznamVybaveni = await Http.GetFromJsonAsync<List<VybaveniModel>?>("/vybaveni");
+    }
+
+    public async Task DeleteVybaveni(VybaveniModel itemDelete)
+    {
+        HttpResponseMessage response = await Http.DeleteAsync($"/vybaveni/{itemDelete.Id}");
+
+        if (response.IsSuccessStatusCode) seznamVybaveni?.Remove(itemDelete);
+
+
+    }
+
+    public async Task PostVybaveni(VybaveniModel newEntityPost)
+    {
+        HttpResponseMessage response = await Http.PostAsJsonAsync("/vybaveni", newEntityPost);
+        if(response.IsSuccessStatusCode) seznamVybaveni?.Insert(0, newEntityPost);
+    }
+
+    public async Task PutVybaveni(VybaveniModel newEntityPut)
+    {        
+        HttpResponseMessage response = await Http.PutAsJsonAsync("/vybaveni", newEntityPut);        
+        
+    }
+
+} 

@@ -6,7 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(corsOptions => corsOptions.AddDefaultPolicy(policy =>
+    policy.WithOrigins("https://localhost:7124")
+    .WithMethods("GET", "POST", "PUT", "DELETE")
+    .AllowAnyHeader()
+));
+
 var app = builder.Build();
+
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -52,24 +60,13 @@ app.MapDelete("/vybaveni/{Id}", (Guid Id) =>
 });
 
 
-app.MapPut("/vybaveni/{Id}",(Guid Id, string jmeno, int prize) =>
+app.MapPut("/vybaveni", (VybaveniModel prichoziModel) =>
 {
-    var item = seznam.SingleOrDefault(x => x.Id == Id);
-    if (item == null)
-        return Results.NotFound("Tato položka nebyla nalezena!!!");
-    var newItem = new VybaveniModel
-    {
-        Id = item.Id,
-        Name = jmeno,
-        BoughtDateTime = item.BoughtDateTime,
-        LastRevision = item.LastRevision,
-        IsInEditMode = item.IsInEditMode,
-        PriceCzk = prize
-    };
-    seznam.Add(newItem);
-    seznam.Remove(item);
-
-
+    var staryZaznam = seznam.SingleOrDefault(x => x.Id == prichoziModel.Id);
+    if (staryZaznam == null) return Results.NotFound("Tento záznam není v seznamu");
+    int ind = seznam.IndexOf(staryZaznam);
+    seznam.Insert(ind, prichoziModel);
+    seznam.Remove(staryZaznam);
     return Results.Ok();
 });
 
