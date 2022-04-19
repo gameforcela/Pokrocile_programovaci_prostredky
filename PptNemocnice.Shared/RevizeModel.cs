@@ -15,7 +15,7 @@ namespace PptNemocnice.Shared
         {
             List<RevizeModel> list = new();
             Random rnd = new();
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 RevizeModel model = new()
                 {
