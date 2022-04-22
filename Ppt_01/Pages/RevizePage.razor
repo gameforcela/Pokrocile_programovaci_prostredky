@@ -3,9 +3,15 @@
 
 <h1 class="text-green-500">@Pozdrav</h1> 
 
+
 <div>
     <input class="border" type="text" @bind-value=vyhledavaniString />
     <button @onclick="() => VyhledavaniClick()" type="button" class="twbtn bg-emerald-500">Vyhledej</button>
+
+    @if (seznamReviziPoVyhledani == null)
+    {
+    <Loading></Loading>
+    }
     @if (seznamReviziPoVyhledani is not null)
     {
         

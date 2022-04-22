@@ -17,7 +17,7 @@ public class VybaveniModel
 
     [JsonIgnore]
     public bool NeedsRevision => DateTime.Now - LastRevision > TimeSpan.FromDays(365 * 2);
-
+    [JsonIgnore]
     public bool IsInEditMode { get; set; }
     public static List<VybaveniModel> GetTestList()
     {
