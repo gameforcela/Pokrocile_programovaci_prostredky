@@ -76,12 +76,9 @@ app.MapDelete("/vybaveni/{Id}", (Guid Id, NemocniceDbContext db, IMapper mapper)
 app.MapPut("/vybaveni", (VybaveniModel prichoziModel, NemocniceDbContext db, IMapper mapper) =>
 {
 
-    var original = db.Vybavenis.SingleOrDefault(x => x.Id == prichoziModel.Id);
-    if (original == null) return Results.NotFound("Tento záznam není v seznamu");
-    mapper.Map(prichoziModel, original);
-    VybaveniData ent = mapper.Map<VybaveniData>(prichoziModel);    
-    db.Vybavenis.Add(ent);
-    db.Vybavenis.Remove(original);
+    var staryZaznam = db.Vybavenis.SingleOrDefault(x => x.Id == prichoziModel.Id);
+    if (staryZaznam == null) return Results.NotFound("Tento záznam není v seznamu");
+    mapper.Map(prichoziModel, staryZaznam);
     db.SaveChanges();
     return Results.Ok();
 });
