@@ -18,30 +18,36 @@
             <th> Datum nákupu </th>
             <td>@item.BoughtDateTime</td>
        </tr> 
+
        <tr>
-            <th> Datum poslední revize  </th>
-            <td>@item.LastRevision</td>
+           <th> Revize</th>
+       </tr>
+       @foreach (var revision in item.Revizions)
+        {
+        <tr>            
+            <td>@revision.Id</td>
+            <td>@revision.Name</td>
+            <td>@revision.DateTime</td>
        </tr> 
-       <tr>
-            <th> Potřebuje revizi? </th>
-            <td>@(item.NeedsRevision?"Ano":"Ne")</td>
-       </tr> 
+        }      
+      
        <tr>
             <th> Cena </th>
             <td>@item.PriceCzk</td>
-       </tr>      
+       </tr>
+       
        </tbody> 
     </table>
     
 
 @code {
-    VybaveniModel? item;
+    VybaveniSRevizemaModel? item;
     [Parameter]
     public Guid Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
 
-        item = await Http.GetFromJsonAsync<VybaveniModel>($"/vybaveni/{Id}");
+        item = await Http.GetFromJsonAsync<VybaveniSRevizemaModel>($"/vybaveni/{Id}");
     }
 }

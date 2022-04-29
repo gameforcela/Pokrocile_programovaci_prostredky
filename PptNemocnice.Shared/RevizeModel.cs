@@ -11,6 +11,8 @@ namespace PptNemocnice.Shared
         public Guid Id { get; set; }
         public string Name { get; set; } = "";
 
+        public DateTime? DateTime { get; set; }
+
         public static List<RevizeModel> GetTestList()
         {
             List<RevizeModel> list = new();

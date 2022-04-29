@@ -13,7 +13,7 @@ public class VybaveniModel
     [Range(1, 10000000, ErrorMessage = "Cena má být {1} až {2}.")]
     public double PriceCzk { get; set; }
     public DateTime BoughtDateTime { get; set; }
-    public DateTime LastRevision { get; set; }
+    public DateTime? LastRevision { get; set; } = null;
 
     [JsonIgnore]
     public bool NeedsRevision => DateTime.Now - LastRevision > TimeSpan.FromDays(365 * 2);

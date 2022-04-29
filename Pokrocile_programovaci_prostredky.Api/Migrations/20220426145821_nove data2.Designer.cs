@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pokrocile_programovaci_prostredky.Api.Data;
 
@@ -10,9 +11,10 @@ using Pokrocile_programovaci_prostredky.Api.Data;
 namespace Pokrocile_programovaci_prostredky.Api.Migrations
 {
     [DbContext(typeof(NemocniceDbContext))]
-    partial class NemocniceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220426145821_nove data2")]
+    partial class novedata2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
@@ -23,7 +25,7 @@ namespace Pokrocile_programovaci_prostredky.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("DateTime")
+                    b.Property<DateTime>("DateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -43,36 +45,22 @@ namespace Pokrocile_programovaci_prostredky.Api.Migrations
                         new
                         {
                             Id = new Guid("b21ec945-0b43-42b7-b900-900a95b1556b"),
-                            DateTime = new DateTime(2021, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "fffff",
+                            DateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "",
                             VybaveniDataID = new Guid("4d2fb71e-658a-4cda-b279-88ad33d6057a")
                         },
                         new
                         {
                             Id = new Guid("1754100a-54e7-4f14-a6aa-e23e09629ec1"),
-                            DateTime = new DateTime(2019, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "dsdfegfg",
+                            DateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "",
                             VybaveniDataID = new Guid("bc541f54-965f-45b2-a18b-aacf68e81c37")
                         },
                         new
                         {
                             Id = new Guid("c1287015-5d0c-4d87-bc3c-2170d64f1538"),
-                            DateTime = new DateTime(2017, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "defdgdvdce",
-                            VybaveniDataID = new Guid("555242cb-c93a-4f71-9350-eeb58c681e13")
-                        },
-                        new
-                        {
-                            Id = new Guid("9161e045-df3b-4e7e-a067-ddfc2c6dd083"),
-                            DateTime = new DateTime(2018, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "ahojjjjdvdce",
-                            VybaveniDataID = new Guid("555242cb-c93a-4f71-9350-eeb58c681e13")
-                        },
-                        new
-                        {
-                            Id = new Guid("23457a2a-2570-41e6-85cb-41a2dff0ea74"),
-                            DateTime = new DateTime(2018, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "dvojice",
+                            DateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "",
                             VybaveniDataID = new Guid("555242cb-c93a-4f71-9350-eeb58c681e13")
                         });
                 });
@@ -118,20 +106,6 @@ namespace Pokrocile_programovaci_prostredky.Api.Migrations
                             BoughtDateTime = new DateTime(2017, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "yyyyy",
                             PriceCzk = 20.0
-                        },
-                        new
-                        {
-                            Id = new Guid("442a4ca6-e703-427e-a07b-a70619d5d3bd"),
-                            BoughtDateTime = new DateTime(2016, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "yyfddgdsgdsfdsyy",
-                            PriceCzk = 222220.0
-                        },
-                        new
-                        {
-                            Id = new Guid("7ec0f0ce-45ee-43a9-87c2-0e234c874f06"),
-                            BoughtDateTime = new DateTime(2015, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "yyyyfdfdsfdfdsfy",
-                            PriceCzk = 66666.0
                         });
                 });
 

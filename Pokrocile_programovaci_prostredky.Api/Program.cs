@@ -37,21 +37,43 @@ app.UseHttpsRedirection();
 List<VybaveniModel> seznam = VybaveniModel.GetTestList();
 List<RevizeModel> seznamRevize = RevizeModel.GetTestList();
 
-app.MapGet("/vybaveni", (NemocniceDbContext db) =>
+app.MapGet("/vybaveni", (NemocniceDbContext db, IMapper mapper) =>
 {
-    return db.Vybavenis;
+    List<VybaveniModel> models = new();   
+
+    var ents = db.Vybavenis.Include(x => x.Revizions);
+    foreach(var ent in ents)
+    {
+        
+        VybaveniModel vybaveni = mapper.Map<VybaveniModel>(ent);
+        ent.Revizions.OrderBy(d => d.DateTime);
+        vybaveni.LastRevision = ent.Revizions.LastOrDefault()?.DateTime;     
+        
+        models.Add(vybaveni);
+    }
+    return Results.Json(models);
 });
 
-app.MapGet("/vybaveni/{Id}", (Guid Id, NemocniceDbContext db) =>
+app.MapGet("/vybaveni/{Id}", (Guid Id, NemocniceDbContext db, IMapper mapper) =>
 {
-    var item = db.Find<VybaveniData>(Id);
-    if (item == null)
-        return Results.NotFound("Tato položka nebyla nalezena!!!");
-    return Results.Ok(item);
+    
+    List<VybaveniSRevizemaModel> models = new();
+    var ents = db.Vybavenis.Include(x => x.Revizions);
+    foreach (var ent in ents)
+    {
+        VybaveniSRevizemaModel vybaveni = mapper.Map<VybaveniSRevizemaModel>(ent);
+        models.Add(vybaveni);
+    }
+    //return Results.Json(models);
+    var zaznam = models.SingleOrDefault(x => x.Id == Id);
+    if (zaznam == null) return Results.NotFound("Tento záznam není v seznamu");  
+    
+    
+    return Results.Ok(zaznam);
 });
 
 
-app.MapPost("/vybaveni", (VybaveniModel prichoziModel,
+app.MapPost("/vybaveni", (VybaveniModel prichoziModel,  
     NemocniceDbContext db, IMapper mapper) =>
 {
     prichoziModel.Id = Guid.Empty;//vynuluju id, db si idèka ošéfuje sama
