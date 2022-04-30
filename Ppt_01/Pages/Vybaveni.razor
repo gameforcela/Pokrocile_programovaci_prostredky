@@ -77,7 +77,7 @@
     {
         HttpResponseMessage response = await Http.PostAsJsonAsync("/revize", newEntityPost);
 
-        var zaznam = seznamVybaveni.SingleOrDefault(x => x.Id == newEntityPost.Id);
+        var zaznam = seznamVybaveni.SingleOrDefault(x => x.Id == newEntityPost.Id);        
         if (response.IsSuccessStatusCode) zaznam.LastRevision = newEntityPost.LastRevision;
     }
 
