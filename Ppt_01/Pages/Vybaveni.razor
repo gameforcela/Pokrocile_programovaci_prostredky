@@ -37,7 +37,7 @@
 
     @foreach (var item in seznamVybaveni)
     {
-        <VybaveniRow Item=item DeleteItemCallback="() => DeleteVybaveni(item)" EditDoneCallback="async (success) => { if(success) await PutVybaveni(item); }"/>
+        <VybaveniRow Item=item DeleteItemCallback="() => DeleteVybaveni(item)" EditDoneCallback="async (success) => { if(success) await PutVybaveni(item); }" NewRevisionDone="async (successNewRevision) => {if(successNewRevision) await PostRevize(item);}" />
     }
 </table>
 
@@ -70,7 +70,15 @@
     public async Task PutVybaveni(VybaveniModel newEntityPut)
     {        
         HttpResponseMessage response = await Http.PutAsJsonAsync("/vybaveni", newEntityPut);        
-        
+
+    }
+
+    public async Task PostRevize(VybaveniModel newEntityPost)
+    {
+        HttpResponseMessage response = await Http.PostAsJsonAsync("/revize", newEntityPost);
+
+        var zaznam = seznamVybaveni.SingleOrDefault(x => x.Id == newEntityPost.Id);
+        if (response.IsSuccessStatusCode) zaznam.LastRevision = newEntityPost.LastRevision;
     }
 
 } 

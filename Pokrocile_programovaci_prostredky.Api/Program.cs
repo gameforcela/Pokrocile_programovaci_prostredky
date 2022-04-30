@@ -112,6 +112,30 @@ app.MapGet("/revize/{vyhledavanyRetezec}", (NemocniceDbContext db, string vyhled
     return Results.Json(kdeJeRetezec);
 });
 
+app.MapPost("/revize", (VybaveniModel prichoziModel,
+    NemocniceDbContext db, IMapper mapper) =>
+{
+    List<VybaveniData> models = new();
+    var ents = db.Vybavenis.Include(x => x.Revizions);
+    foreach (var ent in ents)
+    {
+        VybaveniData vybaveni = mapper.Map<VybaveniData>(ent);
+        models.Add(vybaveni);
+    }
+    //return Results.Json(models);
+    var zaznam = models.SingleOrDefault(x => x.Id == prichoziModel.Id);        
+    
+    RevizeData newRevize = new RevizeData();
+    newRevize.Name = "sfasfdgdg";
+    newRevize.VybaveniDataID = prichoziModel.Id;
+    newRevize.DateTime = DateTime.Now;
+    newRevize.Vybaveni = zaznam;
+    db.Revizes.Add(newRevize);//pøidání do db
+    db.SaveChanges();//uložení db (v tuto chvíli se vytvoøí id)
+
+    return Results.Created("/revize", newRevize.Id);
+});
+
 app.Run();
 
 //record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
