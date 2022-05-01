@@ -75,10 +75,15 @@
 
     public async Task PostRevize(VybaveniModel newEntityPost)
     {
+        newEntityPost.LastRevision = DateTime.Now;
         HttpResponseMessage response = await Http.PostAsJsonAsync("/revize", newEntityPost);
 
-        var zaznam = seznamVybaveni.SingleOrDefault(x => x.Id == newEntityPost.Id);        
-        if (response.IsSuccessStatusCode) zaznam.LastRevision = newEntityPost.LastRevision;
+
+        if (response.IsSuccessStatusCode)
+        {
+            seznamVybaveni.SingleOrDefault(x => x.Id == newEntityPost.Id).LastRevision = newEntityPost.LastRevision;
+            
+        }
     }
 
 } 

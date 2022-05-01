@@ -128,7 +128,7 @@ app.MapPost("/revize", (VybaveniModel prichoziModel,
     RevizeData newRevize = new RevizeData();
     newRevize.Name = "sfasfdgdg";
     newRevize.VybaveniDataID = prichoziModel.Id;
-    newRevize.DateTime = DateTime.Now;
+    newRevize.DateTime = prichoziModel.LastRevision;
     newRevize.Vybaveni = zaznam;
     db.Revizes.Add(newRevize);//pøidání do db
     db.SaveChanges();//uložení db (v tuto chvíli se vytvoøí id)
