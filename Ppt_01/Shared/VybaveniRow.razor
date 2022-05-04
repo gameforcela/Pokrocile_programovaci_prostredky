@@ -21,7 +21,7 @@
 
         <td class="flex gap-1">
             <button @onclick="() => DeleteItemCallback.InvokeAsync()" class="bg-red-400 twbtn">X</button>
-            <button @onclick="() => ResetRevisions(true)" class="bg-blue-400 twbtn">Provést revizi</button>
+            <button @onclick="() => PridejRevizi()" class="bg-blue-400 twbtn">Provést revizi</button>
             <button @onclick="() => TurnOnEdit()" class="twbtn bg-amber-300">✏️</button>
             <a class="nav-link" href="vybaveni/@Item.Id">
                 Detaily vybaveni
@@ -42,8 +42,7 @@ else if (editingItem != null && editingItem.IsInEditMode)
                             <td><InputText class="border-2 border-slate-300" @bind-Value=@editingItem.Name /> <ValidationMessage For=" () => editingItem.Name"></ValidationMessage></td>
 
                             <td><input class="border-2 border-slate-300" type="date" @bind-value=Item.BoughtDateTime /> </td>
-                            <td><input class="border-2 border-slate-300" type="date" @bind-value=Item.LastRevision /> </td>
-                            <td>@(Item.NeedsRevision?"Ano":"Ne") </td>
+                            
 
                             <td><InputNumber class="border-2 border-slate-300" @bind-Value=@editingItem.PriceCzk /><ValidationMessage For=" () => editingItem.PriceCzk"></ValidationMessage></td> 
 
@@ -71,8 +70,7 @@ else if (editingItem != null && editingItem.IsInEditMode)
 @code {
 
     [Parameter] public EventCallback DeleteItemCallback { get; set; }
-    [Parameter] public EventCallback<bool> EditDoneCallback { get; set; }
-    [Parameter] public EventCallback<bool> NewRevisionDone { get; set; }
+    [Parameter] public EventCallback<bool> EditDoneCallback { get; set; }    
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public EventCallback GetNewPage { get; set; }
     VybaveniModel? editingItem;
@@ -112,11 +110,17 @@ else if (editingItem != null && editingItem.IsInEditMode)
             Item.IsInEditMode = false;
         editingItem = null;
         EditDoneCallback.InvokeAsync(success);
-    }
+    }   
 
-    private void ResetRevisions(bool successNewRevision)
+    private async Task PridejRevizi()
     {
-        NewRevisionDone.InvokeAsync(true);
+        RevizeModel novaRevize = new() { Name = "Nova revize", VybaveniID = Item!.Id, DateTime = DateTime.Now };
+        var resp = await Http.PostAsJsonAsync("revize", novaRevize);
+        if (!resp.IsSuccessStatusCode) return;
+
+        novaRevize.Id = await resp.Content.ReadFromJsonAsync<Guid>();
+        Item.LastRevision = novaRevize.DateTime;
+
     }
 
 

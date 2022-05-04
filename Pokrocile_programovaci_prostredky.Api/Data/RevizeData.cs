@@ -7,7 +7,7 @@
 
         public DateTime? DateTime { get; set; }
 
-        public Guid VybaveniDataID { get; set; }
+        public Guid VybaveniId { get; set; }
         public VybaveniData Vybaveni { get; set; } = null!;
     }
 }

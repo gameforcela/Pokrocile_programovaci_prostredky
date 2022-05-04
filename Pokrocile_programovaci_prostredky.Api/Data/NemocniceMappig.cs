@@ -10,6 +10,7 @@ public class NemocniceMappig : Profile
     {
         CreateMap<VybaveniData, VybaveniModel>().ReverseMap();
         CreateMap<RevizeData, RevizeModel>().ReverseMap();
+        CreateMap<VybaveniModel, RevizeData>().ReverseMap();
         CreateMap<VybaveniData, VybaveniSRevizemaModel>().ReverseMap();
     }   
 

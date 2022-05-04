@@ -10,6 +10,7 @@ namespace PptNemocnice.Shared
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = "";
+        public Guid VybaveniID { get; set; }
 
         public DateTime? DateTime { get; set; }
 

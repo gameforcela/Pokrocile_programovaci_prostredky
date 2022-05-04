@@ -23,11 +23,11 @@ public class NemocniceDbContext : DbContext
             new VybaveniData() { Id = Id4, Name = "yyfddgdsgdsfdsyy", BoughtDateTime = new DateTime(2016, 6, 9), PriceCzk = 222220 },
             new VybaveniData() { Id = Id5, Name = "yyyyfdfdsfdfdsfy", BoughtDateTime = new DateTime(2015, 6, 9), PriceCzk = 66666 });
         builder.Entity<RevizeData>().HasData(
-            new RevizeData() { Id = new Guid("b21ec945-0b43-42b7-b900-900a95b1556b"), VybaveniDataID = Id1, DateTime = new DateTime(2021, 6, 9), Name="fffff" },
-            new RevizeData() { Id = new Guid("1754100a-54e7-4f14-a6aa-e23e09629ec1"), VybaveniDataID = Id2, DateTime = new DateTime(2019, 6, 9), Name="dsdfegfg" },
-            new RevizeData() { Id = new Guid("c1287015-5d0c-4d87-bc3c-2170d64f1538"), VybaveniDataID = Id3, DateTime = new DateTime(2017, 6, 9), Name="defdgdvdce" },
-            new RevizeData() { Id = new Guid("9161e045-df3b-4e7e-a067-ddfc2c6dd083"), VybaveniDataID = Id3, DateTime = new DateTime(2018, 6, 9), Name = "ahojjjjdvdce" },
-            new RevizeData() { Id = new Guid("23457a2a-2570-41e6-85cb-41a2dff0ea74"), VybaveniDataID = Id3, DateTime = new DateTime(2018, 6, 9), Name = "dvojice" }
+            new RevizeData() { Id = new Guid("b21ec945-0b43-42b7-b900-900a95b1556b"), VybaveniId = Id1, DateTime = new DateTime(2021, 6, 9), Name="fffff" },
+            new RevizeData() { Id = new Guid("1754100a-54e7-4f14-a6aa-e23e09629ec1"), VybaveniId = Id2, DateTime = new DateTime(2019, 6, 9), Name="dsdfegfg" },
+            new RevizeData() { Id = new Guid("c1287015-5d0c-4d87-bc3c-2170d64f1538"), VybaveniId = Id3, DateTime = new DateTime(2017, 6, 9), Name="defdgdvdce" },
+            new RevizeData() { Id = new Guid("9161e045-df3b-4e7e-a067-ddfc2c6dd083"), VybaveniId = Id3, DateTime = new DateTime(2018, 6, 9), Name = "ahojjjjdvdce" },
+            new RevizeData() { Id = new Guid("23457a2a-2570-41e6-85cb-41a2dff0ea74"), VybaveniId = Id3, DateTime = new DateTime(2018, 6, 9), Name = "dvojice" }
             );
     }
 
