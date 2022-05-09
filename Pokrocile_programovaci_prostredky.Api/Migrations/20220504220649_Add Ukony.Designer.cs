@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pokrocile_programovaci_prostredky.Api.Data;
 
@@ -10,9 +11,10 @@ using Pokrocile_programovaci_prostredky.Api.Data;
 namespace Pokrocile_programovaci_prostredky.Api.Migrations
 {
     [DbContext(typeof(NemocniceDbContext))]
-    partial class NemocniceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220504220649_Add Ukony")]
+    partial class AddUkony
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
@@ -103,7 +105,7 @@ namespace Pokrocile_programovaci_prostredky.Api.Migrations
 
                     b.HasIndex("VybaveniId");
 
-                    b.ToTable("Ukonis");
+                    b.ToTable("Ukons");
 
                     b.HasData(
                         new
@@ -225,7 +227,7 @@ namespace Pokrocile_programovaci_prostredky.Api.Migrations
             modelBuilder.Entity("Pokrocile_programovaci_prostredky.Api.Data.UkonData", b =>
                 {
                     b.HasOne("Pokrocile_programovaci_prostredky.Api.Data.VybaveniData", "Vybaveni")
-                        .WithMany("Ukonis")
+                        .WithMany()
                         .HasForeignKey("VybaveniId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -236,8 +238,6 @@ namespace Pokrocile_programovaci_prostredky.Api.Migrations
             modelBuilder.Entity("Pokrocile_programovaci_prostredky.Api.Data.VybaveniData", b =>
                 {
                     b.Navigation("Revizions");
-
-                    b.Navigation("Ukonis");
                 });
 #pragma warning restore 612, 618
         }

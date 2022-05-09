@@ -1,0 +1,75 @@
+﻿@page "/NewUkon/{Id:guid}"
+@inject HttpClient Http
+@using Microsoft.Extensions.Logging
+@inject ILogger<NewUkon> Logger
+
+<h3 class="display-3">Nový úkon vybavení @Id</h3> 
+<EditForm Model=@editContext OnSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+  <div class="form-group">
+    <label for="Name">Jméno úkonu: </label>
+    <InputText @bind-Value=predDefined.Name class="form-control" id="Name" />
+  </div>
+
+  <div class="form-group">
+    <label for="DateTime">DateTime</label>
+    <InputDate @bind-Value=predDefined.DateTime class="form-control" id="DateTime" />
+  </div>
+
+  <div class="form-group">
+    <label for="PriceCzk">PriceCzk</label>
+    <InputNumber @bind-Value=predDefined.PriceCzk class="form-control" id="PriceCzk" />
+  </div>
+
+  <div class="form-group">
+    <label class="form-check-label" for="OutPutGood">OutPutGood</label>
+    <InputCheckbox @bind-Value=predDefined.OutPutGood class="form-check-input" id="OutPutGood" />
+  </div>
+
+  <input type="submit" class="btn btn-success text-black" value="Save"/>
+
+
+</EditForm>
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private UkonModel predDefined = 
+    new() 
+    {   
+        Name = "jmeno",        
+        DateTime = DateTime.Now,
+        PriceCzk = 1,
+        OutPutGood = true
+    };
+
+    private EditContext? editContext;
+
+    protected override void OnInitialized()
+    {
+        editContext = new(predDefined);
+    }
+
+    public async Task PostUkon(UkonModel newEntity, Guid Id)
+    {
+        newEntity.VybaveniId = Id;
+        HttpResponseMessage response = await Http.PostAsJsonAsync("/NewUkon", newEntity);       
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (editContext != null && editContext.Validate())
+        {
+            Logger.LogInformation("HandleSubmit called: Form is valid");
+            PostUkon(predDefined, Id);           
+            
+        }
+        else
+        {
+            Logger.LogInformation("HandleSubmit called: Form is INVALID");
+        }
+    }
+
+}

@@ -7,5 +7,6 @@
         public double PriceCzk { get; set; }
         public DateTime BoughtDateTime { get; set; }
         public List<RevizeData> Revizions { get; set; } = new();
+        public List<UkonData> Ukonis { get; set; } = new();
     }
 }

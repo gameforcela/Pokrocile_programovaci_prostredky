@@ -26,6 +26,13 @@
             <a class="nav-link" href="vybaveni/@Item.Id">
                 Detaily vybaveni
             </a>
+            @if(Item.NeedsRevision == false)
+            {
+                <a class="nav-link" href="NewUkon/@Item.Id">
+                Nový úkon
+            </a>
+            }
+            
         </td>
     </tr>
 }

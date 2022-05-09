@@ -1,7 +1,7 @@
 ﻿@page "/vybaveni/{Id:guid}"
 @inject HttpClient Http
 
-<h3 class="display-4">Detail výrobku - @item.Name</h3>
+<h3 class="display-3">Detail výrobku - @item.Name</h3>
 
 
     <table class="table table-striped table-primary">
@@ -30,7 +30,17 @@
             <td>@revision.DateTime</td>
        </tr> 
         }      
-      
+      <tr>
+           <th> Ukony</th>
+       </tr>
+       @foreach (var ukon in item.Ukonis)
+        {
+        <tr>            
+            <td>@ukon.Id</td>
+            <td>@ukon.Name</td>
+            <td>@ukon.DateTime</td>
+       </tr> 
+        }      
        <tr>
             <th> Cena </th>
             <td>@item.PriceCzk</td>

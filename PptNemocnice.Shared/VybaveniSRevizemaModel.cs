@@ -11,4 +11,6 @@ public class VybaveniSRevizemaModel
 
     public List<RevizeModel> Revizions { get; set; } = new();
 
+    public List<UkonModel> Ukonis { get; set; } = new();
+
 }
