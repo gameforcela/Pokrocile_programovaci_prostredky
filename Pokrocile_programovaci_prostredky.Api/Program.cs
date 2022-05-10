@@ -40,6 +40,7 @@ app.UseHttpsRedirection();
 List<VybaveniModel> seznam = VybaveniModel.GetTestList();
 List<RevizeModel> seznamRevize = RevizeModel.GetTestList();
 
+app.MapGet("/", () => "Hello");
 
 app.MapGet("/revize/{vyhledavanyRetezec}", (NemocniceDbContext db, string vyhledavanyRetezec) =>
 {
