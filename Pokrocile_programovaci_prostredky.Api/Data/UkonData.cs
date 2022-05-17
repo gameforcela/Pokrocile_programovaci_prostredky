@@ -6,8 +6,11 @@
         public string Name { get; set; } = "";
         public DateTime? DateTime { get; set; }
         public Guid VybaveniId { get; set; }
+        public Guid? PracovniciId { get; set; }
         public double PriceCzk { get; set; }
         public bool OutPutGood { get; set; }
         public VybaveniData Vybaveni { get; set; } = null!;
+
+        public PracovniciData? Pracovnici { get; set; } = null!;
     }
 }

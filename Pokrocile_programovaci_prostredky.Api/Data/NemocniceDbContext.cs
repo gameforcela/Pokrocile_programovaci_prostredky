@@ -41,5 +41,6 @@ public class NemocniceDbContext : DbContext
     public DbSet<VybaveniData> Vybavenis => Set<VybaveniData>();
     public DbSet<RevizeData> Revizes => Set<RevizeData>();
     public DbSet<UkonData> Ukonis => Set<UkonData>();
+    public DbSet<PracovniciData> Pracovnicis => Set<PracovniciData>();
 }
 

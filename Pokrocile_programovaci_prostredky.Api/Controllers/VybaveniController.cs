@@ -43,7 +43,7 @@ public class VybaveniController : ControllerBase {
     [HttpGet("{Id}")]
     public ActionResult<VybaveniSRevizemaModel> GetVybaveniById(Guid Id)
     {
-        var item = _db.Vybavenis.Include(x => x.Revizions).Include(x => x.Ukonis).SingleOrDefault(x => x.Id == Id);
+        var item = _db.Vybavenis.Include(x => x.Revizions).Include(x => x.Ukonis).ThenInclude(x => x.Pracovnici).SingleOrDefault(x => x.Id == Id);
         
         if (item == null) return NotFound(); 
         return _mapper.Map<VybaveniSRevizemaModel>(item);
