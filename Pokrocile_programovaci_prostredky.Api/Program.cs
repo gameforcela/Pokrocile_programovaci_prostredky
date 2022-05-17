@@ -42,14 +42,14 @@ List<RevizeModel> seznamRevize = RevizeModel.GetTestList();
 
 app.MapGet("/", () => "Hello");
 
-app.MapGet("revize/{vyhledavanyRetezec}", (NemocniceDbContext db, string vyhledavanyRetezec) =>
+app.MapGet("/revize/{vyhledavanyRetezec}", (NemocniceDbContext db, string vyhledavanyRetezec) =>
 {
     if (string.IsNullOrWhiteSpace(vyhledavanyRetezec)) return Results.Problem("Parametr musi byt neprazdny");
     var kdeJeRetezec = db.Revizes.Where(x => x.Name.Contains(vyhledavanyRetezec));
     return Results.Json(kdeJeRetezec);
 });
 
-app.MapPost("revize", (RevizeModel prichoziModel,
+app.MapPost("/revize", (RevizeModel prichoziModel,
     NemocniceDbContext db, IMapper mapper) =>
 {
     prichoziModel.Id = Guid.Empty;//vynuluju id, db si idèka ošéfuje sama
@@ -61,7 +61,7 @@ app.MapPost("revize", (RevizeModel prichoziModel,
 
 });
 
-app.MapPost("NewUkon", (UkonModel prichoziModel,
+app.MapPost("/NewUkon", (UkonModel prichoziModel,
     NemocniceDbContext db, IMapper mapper) =>
 {
     prichoziModel.Id = Guid.Empty;//vynuluju id, db si idèka ošéfuje sama
